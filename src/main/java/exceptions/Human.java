@@ -15,8 +15,8 @@ public class Human {
             throw new Sneeze();
         } catch (Sneeze s) {
             System.out.println("Caught Sneeze");
-        } catch (Annoyance a) {
-            System.out.println("Caught Annoyance");
+//        } catch (Annoyance a) {
+//            System.out.println("Caught Annoyance");
         }
         // Catch the base type:
         try {
