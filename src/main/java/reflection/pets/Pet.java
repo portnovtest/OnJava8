@@ -1,4 +1,4 @@
-package typeinfo.pets;
+package reflection.pets;
 
 public class Pet extends Individual {
     public Pet(String name) { super(name); }

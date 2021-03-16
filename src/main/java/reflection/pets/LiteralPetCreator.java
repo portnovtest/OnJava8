@@ -1,4 +1,4 @@
-package typeinfo.pets;
+package reflection.pets;
 
 import java.util.Arrays;
 import java.util.Collections;

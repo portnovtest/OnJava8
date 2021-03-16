@@ -32,7 +32,7 @@ class MoreUseful extends Useful {
     }
 }
 
-public class RTTI {
+public class Reflect {
     public static void main(String[] args) {
         Useful[] x = {
                 new Useful(),
@@ -43,6 +43,6 @@ public class RTTI {
         // Compile time: method not found in Useful:
         //- x[1].u();
         ((MoreUseful) x[1]).u(); // Downcast/RTTI
-        // ((MoreUseful)x[0]).u(); // Exception thrown
+         //((MoreUseful)x[0]).u(); // Exception thrown
     }
 }

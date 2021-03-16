@@ -2,7 +2,7 @@ package collections;
 
 // {java.collections.MapOfList}
 
-import typeinfo.pets.*;
+import reflection.pets.*;
 
 import java.util.Arrays;
 import java.util.HashMap;

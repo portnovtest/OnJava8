@@ -1,4 +1,4 @@
-package typeinfo.pets;
+package reflection.pets;
 
 public class EgyptianMau extends Cat {
     public EgyptianMau(String name) { super(name); }
