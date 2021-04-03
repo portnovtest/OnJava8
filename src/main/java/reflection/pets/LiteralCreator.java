@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class LiteralPetCreator extends PetCreator {
+public class LiteralCreator extends Creator {
     // No try block needed.
     @SuppressWarnings("unchecked")
     public static

@@ -1,26 +1,34 @@
 package reflection.pets;
 
-import java.lang.reflect.InvocationTargetException;
+// Using class literals
+// {java.reflection.pets.PetCounter}
+
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-import java.util.function.Supplier;
 
-public abstract class PetCreator implements Supplier<Pet> {
-    private Random rand = new Random(47);
+public class PetCreator extends Creator {
+    // No try block needed
+    public static final List<Class<? extends Pet>> ALL_TYPES =
+            Collections.unmodifiableList(Arrays.asList(
+                    Pet.class, Dog.class, Cat.class, Rodent.class,
+                    Mutt.class, Pug.class, EgyptianMau.class,
+                    Manx.class, Cymric.class, Rat.class,
+                    Mouse.class, Hamster.class));
+    // Types for random creation:
+    private static final List<Class<? extends Pet>> TYPES = ALL_TYPES.subList(
+            ALL_TYPES.indexOf(Mutt.class),
+            ALL_TYPES.size());
 
-    // The List of the different types of Pet to create:
-    public abstract List<Class<? extends Pet>> types();
-
-    public Pet get() { // Create one random Pet
-        int n = rand.nextInt(types().size());
-        try {
-            return types().get(n)
-                    .getConstructor().newInstance();
-        } catch (InstantiationException |
-                NoSuchMethodException |
-                InvocationTargetException |
-                IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
+    @Override
+    public List<Class<? extends Pet>> types() {
+        return TYPES;
     }
+
+    public static void main(String[] args) {
+        System.out.println(TYPES);
+        List<Pet> pets = new PetCreator().list(7);
+        System.out.println(pets);
+    }
+
 }

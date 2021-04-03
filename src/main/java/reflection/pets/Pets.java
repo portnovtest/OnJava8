@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class Pets {
-    public static final PetCreator CREATOR =
-            new LiteralPetCreator();
+    public static final Creator CREATOR =
+            new LiteralCreator();
     public static Pet get() {
         return CREATOR.get();
     }
