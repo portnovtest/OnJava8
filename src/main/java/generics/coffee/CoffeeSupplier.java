@@ -6,6 +6,8 @@ import java.util.Random;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+// {java generics.coffee.CoffeeSupplier}
+
 public class CoffeeSupplier implements Supplier<Coffee>, Iterable<Coffee> {
     private Class<?>[] types = {Latte.class, Mocha.class, Cappuccino.class, Americano.class, Breve.class,};
     private static Random rand = new Random(47);

@@ -1,3 +1,4 @@
 package onjava;
 
-public interface Null {}
+public interface Null {
+}
