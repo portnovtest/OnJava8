@@ -1,7 +1,8 @@
 package onjava;
 
+// Generate incremental values of different types
+
 import java.util.Arrays;
-import java.util.SplittableRandom;
 import java.util.function.DoubleSupplier;
 import java.util.function.IntSupplier;
 import java.util.function.LongSupplier;
@@ -9,15 +10,14 @@ import java.util.function.Supplier;
 
 import static onjava.ConvertTo.primitive;
 
-public interface Rand {
-    int MOD = 10_000;
-
+public interface Count {
     class Boolean implements Supplier<java.lang.Boolean> {
-        SplittableRandom r = new SplittableRandom(47);
+        private boolean b = true;
 
         @Override
         public java.lang.Boolean get() {
-            return r.nextBoolean();
+            b = !b;
+            return java.lang.Boolean.valueOf(b);
         }
 
         public java.lang.Boolean get(int n) {
@@ -32,17 +32,28 @@ public interface Rand {
     }
 
     class Pboolean {
+        private boolean b = true;
+
+        public boolean get() {
+            b = !b;
+            return b;
+        }
+
+        public boolean get(int n) {
+            return get();
+        }
+
         public boolean[] array(int sz) {
             return primitive(new Boolean().array(sz));
         }
     }
 
     class Byte implements Supplier<java.lang.Byte> {
-        SplittableRandom r = new SplittableRandom(47);
+        private byte b;
 
         @Override
         public java.lang.Byte get() {
-            return (byte) r.nextInt(MOD);
+            return b++;
         }
 
         public java.lang.Byte get(int n) {
@@ -57,17 +68,30 @@ public interface Rand {
     }
 
     class Pbyte {
+        private byte b;
+
+        public byte get() {
+            return b++;
+        }
+
+        public byte get(int n) {
+            return get();
+        }
+
         public byte[] array(int sz) {
             return primitive(new Byte().array(sz));
         }
     }
 
+    char[] CHARS = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+
     class Character implements Supplier<java.lang.Character> {
-        SplittableRandom r = new SplittableRandom(47);
+        private int i;
 
         @Override
         public java.lang.Character get() {
-            return (char) r.nextInt('a', 'z' + 1);
+            i = (i + 1) % CHARS.length;
+            return CHARS[i];
         }
 
         public java.lang.Character get(int n) {
@@ -82,17 +106,28 @@ public interface Rand {
     }
 
     class Pchar {
+        private int i;
+
+        public char get() {
+            i = (i + 1) % CHARS.length;
+            return CHARS[i];
+        }
+
+        public char get(int n) {
+            return get();
+        }
+
         public char[] array(int sz) {
             return primitive(new Character().array(sz));
         }
     }
 
     class Short implements Supplier<java.lang.Short> {
-        SplittableRandom r = new SplittableRandom(47);
+        short s;
 
         @Override
         public java.lang.Short get() {
-            return (short) r.nextInt(MOD);
+            return s++;
         }
 
         public java.lang.Short get(int n) {
@@ -107,17 +142,27 @@ public interface Rand {
     }
 
     class Pshort {
+        short s;
+
+        public short get() {
+            return s++;
+        }
+
+        public short get(int n) {
+            return get();
+        }
+
         public short[] array(int sz) {
             return primitive(new Short().array(sz));
         }
     }
 
     class Integer implements Supplier<java.lang.Integer> {
-        SplittableRandom r = new SplittableRandom(47);
+        int i;
 
         @Override
         public java.lang.Integer get() {
-            return r.nextInt(MOD);
+            return i++;
         }
 
         public java.lang.Integer get(int n) {
@@ -125,38 +170,39 @@ public interface Rand {
         }
 
         public java.lang.Integer[] array(int sz) {
-            int[] primitive = new Pint().array(sz);
             java.lang.Integer[] result = new java.lang.Integer[sz];
-            for (int i = 0; i < sz; i++) {
-                result[i] = primitive[i];
-            }
+            Arrays.setAll(result, n -> get());
             return result;
         }
     }
 
     class Pint implements IntSupplier {
-        SplittableRandom r = new SplittableRandom(47);
+        int i;
 
-        @Override
-        public int getAsInt() {
-            return r.nextInt(MOD);
+        public int get() {
+            return i++;
         }
 
         public int get(int n) {
-            return getAsInt();
+            return get();
+        }
+
+        @Override
+        public int getAsInt() {
+            return get();
         }
 
         public int[] array(int sz) {
-            return r.ints(sz, 0, MOD).toArray();
+            return primitive(new Integer().array(sz));
         }
     }
 
     class Long implements Supplier<java.lang.Long> {
-        SplittableRandom r = new SplittableRandom(47);
+        private long l;
 
         @Override
         public java.lang.Long get() {
-            return r.nextLong(MOD);
+            return l++;
         }
 
         public java.lang.Long get(int n) {
@@ -164,38 +210,39 @@ public interface Rand {
         }
 
         public java.lang.Long[] array(int sz) {
-            long[] primitive = new Plong().array(sz);
             java.lang.Long[] result = new java.lang.Long[sz];
-            for (int i = 0; i < sz; i++) {
-                result[i] = primitive[i];
-            }
+            Arrays.setAll(result, n -> get());
             return result;
         }
     }
 
     class Plong implements LongSupplier {
-        SplittableRandom r = new SplittableRandom(47);
+        private long l;
 
-        @Override
-        public long getAsLong() {
-            return r.nextLong(MOD);
+        public long get() {
+            return l++;
         }
 
         public long get(int n) {
-            return getAsLong();
+            return get();
+        }
+
+        @Override
+        public long getAsLong() {
+            return get();
         }
 
         public long[] array(int sz) {
-            return r.longs(sz, 0, MOD).toArray();
+            return primitive(new Long().array(sz));
         }
     }
 
     class Float implements Supplier<java.lang.Float> {
-        SplittableRandom r = new SplittableRandom(47);
+        private int i;
 
         @Override
         public java.lang.Float get() {
-            return (float) trim(r.nextDouble());
+            return java.lang.Float.valueOf(i++);
         }
 
         public java.lang.Float get(int n) {
@@ -210,21 +257,27 @@ public interface Rand {
     }
 
     class Pfloat {
+        private int i;
+
+        public float get() {
+            return i++;
+        }
+
+        public float get(int n) {
+            return get();
+        }
+
         public float[] array(int sz) {
             return primitive(new Float().array(sz));
         }
     }
 
-    static double trim(double d) {
-        return ((double) Math.round(d * 1000.0)) / 100.0;
-    }
-
     class Double implements Supplier<java.lang.Double> {
-        SplittableRandom r = new SplittableRandom(47);
+        private int i;
 
         @Override
         public java.lang.Double get() {
-            return trim(r.nextDouble());
+            return java.lang.Double.valueOf(i++);
         }
 
         public java.lang.Double get(int n) {
@@ -232,61 +285,30 @@ public interface Rand {
         }
 
         public java.lang.Double[] array(int sz) {
-            double[] primitive = new Rand.Pdouble().array(sz);
             java.lang.Double[] result = new java.lang.Double[sz];
-            for (int i = 0; i < sz; i++) {
-                result[i] = primitive[i];
-            }
+            Arrays.setAll(result, n -> get());
             return result;
         }
     }
 
     class Pdouble implements DoubleSupplier {
-        SplittableRandom r = new SplittableRandom(47);
+        private int i;
 
-        @Override
-        public double getAsDouble() {
-            return trim(r.nextDouble());
+        public double get() {
+            return i++;
         }
 
         public double get(int n) {
-            return getAsDouble();
-        }
-
-        public double[] array(int sz) {
-            double[] result = r.doubles(sz).toArray();
-            Arrays.setAll(result, n -> result[n] = trim(result[n]));
-            return result;
-        }
-    }
-
-    class String implements Supplier<java.lang.String> {
-        SplittableRandom r = new SplittableRandom(47);
-        private int strlen = 7; // Default length
-
-        public String() {
-        }
-
-        public String(int strLength) {
-            strlen = strLength;
-        }
-
-        @Override
-        public java.lang.String get() {
-            return r.ints(strlen, 'a', 'z' + 1)
-                    .collect(StringBuilder::new,
-                            StringBuilder::appendCodePoint,
-                            StringBuilder::append).toString();
-        }
-
-        public java.lang.String get(int n) {
             return get();
         }
 
-        public java.lang.String[] array(int sz) {
-            java.lang.String[] result = new java.lang.String[sz];
-            Arrays.setAll(result, n -> get());
-            return result;
+        @Override
+        public double getAsDouble() {
+            return get(0);
+        }
+
+        public double[] array(int sz) {
+            return primitive(new Double().array(sz));
         }
     }
 }
