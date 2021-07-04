@@ -3,6 +3,7 @@ package onjava;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
+// Terminate a program after t seconds
 public class TimedAbort {
     private volatile boolean restart = true;
 
@@ -11,8 +12,7 @@ public class TimedAbort {
             try {
                 while (restart) {
                     restart = false;
-                    TimeUnit.MILLISECONDS
-                            .sleep((int) (1000 * t));
+                    TimeUnit.MILLISECONDS.sleep((int) (1000 * t));
                 }
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
